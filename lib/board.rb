@@ -22,10 +22,7 @@ class Board
 
     def valid_placement?(ship, coordinates)
       placement = Placement.new(ship, coordinates)
-      placement.split_keys
-
-
-      return placement.valid_placement
+      return placement.valid_placement?
     end
 
 

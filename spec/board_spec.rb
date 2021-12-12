@@ -36,45 +36,39 @@ RSpec.describe Board do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    board.create_board
     expect(board.valid_placement?(cruiser, ["A1", "A2"])).to be false
     expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
   end
 
-  xit 'coordinates are consecutive' do
+  it 'coordinates are not consecutive' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    # this test is not done being written
     expect(board.valid_placement?(cruiser, ["A1", "A2", "A4"])).to be false
     expect(board.valid_placement?(submarine, ["A1", "C1"])).to be false
-    expect(board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to be false
-    expect(board.valid_placement?(cruiser, ["C1", "B1"])).to be false
   end
 
-  xit 'coordinates are not diagonal' do
+  it 'coordinates are not diagonal' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    # this test is not done being written
     expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to be false
     expect(board.valid_placement?(submarine, ["C2", "D3"])).to be false
   end
 
-  xit 'coordinates are not diagonal' do
+  it 'coordinates are not diagonal' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    # this test is not done being written
-    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to be true
-    expect(board.valid_placement?(submarine, ["B1", "C1", "D1"])).to be true
+    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to be false
+    expect(board.valid_placement?(submarine, ["B1", "C1", "D1"])).to be false
   end
 
-  xit '' do
+  it 'coordinates are not verticle' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
-
+    expect(board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to be false
+    expect(board.valid_placement?(cruiser, ["C1", "B1", "A1"])).to be false
   end
 
 end
