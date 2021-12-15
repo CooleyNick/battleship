@@ -100,16 +100,25 @@ class Game
     rounds
   end
 
+  def sunk_ship?
+    @player.delete_if {|ship| ship.sunk?}
+    @computer.delete_if {|ship| ship.sunk?}
+  end
 
   def end_game
-
-    @player == 0 || @computer.count == 0
+    sunk_ship?
+    @player.count == 0 || @computer.count == 0
   end
 
   def rounds
     until end_game == true
       player_turn
     end
+    winner
+  end
+
+  def winner
+    p 'winner'
   end
 
 
