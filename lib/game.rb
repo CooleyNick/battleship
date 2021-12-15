@@ -55,22 +55,62 @@ class Game
   end
 
   def computer_randomizer(ship)
-    @computer_board.cells.keys.sample(ship.length)
+    @computer_board.clear
+  random =  @computer_board.cells.keys.sample(ship.length)
+    if @computer_board.valid_placement?(ship, random) == true
+      return random
+    else
+      computer_randomizer(ship)
+     end
   end
 
   def computer_place_cruiser
     placer = computer_randomizer(@computer_cruiser)
-    case
-    when @computer_board.valid_placement?(@computer_cruiser, placer) == true then @computer_board.place(@computer_cruiser, placer)
-    else
-      @computer_board.clear
-      computer_place_cruiser
+    @computer_board.place(@computer_cruiser, placer)
+    @computer << @computer_cruiser
+      computer_place_sub
+  end
+
+  def computer_place_sub
+    sub = computer_randomizer(@computer_submarine)
+    @computer_board.place(@computer_submarine, sub)
+    @computer << @computer_submarine
+    p @computer_board.render(true)
+    player_turn
+  end
+
+  def computer_shot
+    shot =  @computer_board.cells.keys.sample(1)
+    return shot
+  end
+
+
+  def player_turn
+    p 'Fire on a coordinate'
+    fire = input.to_s.upcase
+    @computer_board.cells[fire].fire_upon
+    p @computer_board.render
+    computer_turn
+  end
+
+  def computer_turn
+    p 'Computers turn'
+    @board.cells[computer_shot.first].fire_upon
+    @board.render
+    rounds
+  end
+
+
+  def end_game
+
+    @player == 0 || @computer.count == 0
+  end
+
+  def rounds
+    until end_game == true
+      player_turn
     end
-      p @computer_board.render(true)
   end
 
 
-  def turns
-
-  end
 end
